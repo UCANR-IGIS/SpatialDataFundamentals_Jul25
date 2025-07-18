@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="" />
+  <title>R Fundamentals</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+            pre > code.sourceCode { white-space: pre; position: relative; }
+            pre > code.sourceCode > span { line-height: 1.25; }
+            pre > code.sourceCode > span:empty { height: 1.2em; }
+            .sourceCode { overflow: visible; }
+            code.sourceCode > span { color: inherit; text-decoration: inherit; }
+            div.sourceCode { margin: 1em 0; }
+            pre.sourceCode { margin: 0; }
+            @media screen {
+            div.sourceCode { overflow: auto; }
+            }
+            @media print {
+            pre > code.sourceCode { white-space: pre-wrap; }
+            pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+            }
+            pre.numberSource code
+              { counter-reset: source-line 0; }
+            pre.numberSource code > span
+              { position: relative; left: -4em; counter-increment: source-line; }
+            pre.numberSource code > span > a:first-child::before
+              { content: counter(source-line);
+                position: relative; left: -1em; text-align: right; vertical-align: baseline;
+                border: none; display: inline-block;
+                -webkit-touch-callout: none; -webkit-user-select: none;
+                -khtml-user-select: none; -moz-user-select: none;
+                -ms-user-select: none; user-select: none;
+                padding: 0 4px; width: 4em;
+                color: #aaaaaa;
+              }
+            pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+            div.sourceCode
+              {   }
+            @media screen {
+            pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+            }
+            code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+            code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+            code span.at { color: #7d9029; } /* Attribute */
+            code span.bn { color: #40a070; } /* BaseN */
+            code span.bu { color: #008000; } /* BuiltIn */
+            code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+            code span.ch { color: #4070a0; } /* Char */
+            code span.cn { color: #880000; } /* Constant */
+            code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+            code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+            code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+            code span.dt { color: #902000; } /* DataType */
+            code span.dv { color: #40a070; } /* DecVal */
+            code span.er { color: #ff0000; font-weight: bold; } /* Error */
+            code span.ex { } /* Extension */
+            code span.fl { color: #40a070; } /* Float */
+            code span.fu { color: #06287e; } /* Function */
+            code span.im { color: #008000; font-weight: bold; } /* Import */
+            code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+            code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+            code span.op { color: #666666; } /* Operator */
+            code span.ot { color: #007020; } /* Other */
+            code span.pp { color: #bc7a00; } /* Preprocessor */
+            code span.sc { color: #4070a0; } /* SpecialChar */
+            code span.ss { color: #bb6688; } /* SpecialString */
+            code span.st { color: #4070a0; } /* String */
+            code span.va { color: #19177c; } /* Variable */
+            code span.vs { color: #4070a0; } /* VerbatimString */
+            code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+          </style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="lib/header-attrs-2.29/header-attrs.js"></script>
+  <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="lib/slidy-2/scripts/slidy.js"></script>
+  <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
+  <script src="lib/kePrint-0.0.1/kePrint.js"></script>
+  <link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+  <link href="lib/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+  <script src="lib/bsTable-3.3.7/bootstrapTable.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="slidy2022.css" />
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Fundamentals of Coding with R</h1>
+  <p class="author">
+<img src='images/r-logo_240x180.png' style='width:240px; height:180px; margin-top:2em;'/>
+  </p>
+</div>
+<div id="outline" class="slide section level1">
+<h1>Outline</h1>
+<script>
+w3c_slidy.mouse_click_enabled = false;
+</script>
+<div class="indented2">
+<ul>
+<li>R as a fancy calculator<br />
+</li>
+<li>objects and classes<br />
+</li>
+<li>scripts &amp; notebooks<br />
+</li>
+<li>functions<br />
+</li>
+<li>packages<br />
+</li>
+<li>piping syntax</li>
+<li>vectors<br />
+</li>
+<li>tabular data<br />
+</li>
+</ul>
+</div>
+</div>
+<div id="r-as-a-fancy-calculator" class="slide section level1">
+<h1>R as a Fancy Calculator</h1>
+<ul class="incremental">
+<li style="list-style:none;">
+<div style="display:flex; justify-content:flex-start;">
+<div>
+<p><img src="images/fancy-calc-01_230x58x256.png" /></p>
+</div>
+<!--- end left div --->
+<div>
+<p>When you type an <strong>expression</strong> at the console and hit
+enter, R will <strong>evaluate</strong> the expression and <strong>print
+the result</strong> at the console.</p>
+</div>
+<p><!--- end right div ---></p>
+</div>
+<!--- end container --->
+</li>
+<li style="list-style:none;">
+<div style="display:flex; justify-content:flex-start;">
+<div>
+<p><img src="images/fancy-calc-02a_230x36x256.png" /></p>
+</div>
+<!--- end left div --->
+<div>
+<p>When you save or <strong>assign</strong> the result of an expression
+to an <strong>object</strong>, R will <strong>not</strong> print the
+value at the console.</p>
+</div>
+<p><!--- end right div ---></p>
+</div>
+<!--- end container --->
+</li>
+<li style="list-style:none;">
+<div style="display:flex; justify-content:flex-start;">
+<div>
+<p><img src="images/fancy-calc-02b_230x36x256.png" /></p>
+</div>
+<!--- end left div --->
+<div>
+<p>R has two assignment operators:</p>
+<div style="margin-left:2em;">
+<p><code>=</code><br />
+<code>&lt;-</code></p>
+</div>
+</div>
+<p><!--- end right div ---></p>
+</div>
+<!--- end container --->
+</li>
+<li style="list-style:none;">
+<div style="display:flex; justify-content:flex-start;">
+<div>
+<p><img src="images/fancy-calc-03_230x155x256.png" /></p>
+</div>
+<!--- end left div --->
+<div>
+<p>To view the value of an object, you can enter it at the console.</p>
+<p>Once defined, an object can be used in subsequent expressions.</p>
+<p>Objects are stored in memory. They will disappear when you shut down
+R (unless you tell RStudio to auto-save and reload objects in
+memory).</p>
+</div>
+<p><!--- end right div ---></p>
+</div>
+<!--- end container --->
+</li>
+<li style="list-style:none;">
+<div style="display:flex; justify-content:flex-start;">
+<div>
+<p><img src="images/fancy-calc-04_230x78x256.png" /></p>
+</div>
+<!--- end left div --->
+<div>
+<p>Every object has a data type or <strong>class</strong>.</p>
+<p>Common data types:</p>
+<div style="margin-left:1em;">
+<p>numeric<br />
+character<br />
+factor<br />
+date<br />
+data frame, tibble<br />
+matrix<br />
+list</p>
+</div>
+</div>
+<p><!--- end right div ---></p>
+</div>
+<!--- end container --->
+</li>
+</ul>
+</div>
+<div id="naming-objects" class="slide section level1">
+<h1>Naming Objects</h1>
+<style type="text/css">
+span.badcode {
+  color:crimson;
+  font-weight:bold;
+  font-family:monospace;
+}
+</style>
+<p>The rules for naming objects are pretty flexible. You can use
+numbers, letters, and most special characters.</p>
+<p>A few rules to take note of:</p>
+<div class="indented2">
+<ul>
+<li>Can’t start with a number: <span class="badcode">3pieces</span></li>
+<li>Hyphens and spaces not allowed: <span class="badcode">first name,
+last-name</span></li>
+<li>Don’t use the name of a built-in function, constant, or keyword:
+<span class="badcode">c, pi</span></li>
+</ul>
+</div>
+<p><br />
+</p>
+<h2 id="naming-styles">Naming Styles</h2>
+<p>There are a handful of popular <a
+href="https://www.r-bloggers.com/consistent-naming-conventions-in-r/"
+target="_blank">naming styles</a>. Pick one that you like, and be
+consistent!</p>
+<table class="tbl_compact">
+<thead>
+<tr>
+<th style="text-align:left;">
+Style
+</th>
+<th style="text-align:left;">
+Example
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+alllowercase
+</td>
+<td style="text-align:left;font-family: monospace;">
+adjustcolor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+period.separated
+</td>
+<td style="text-align:left;font-family: monospace;">
+shoe.size
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+underscore_separated (aka snake case)
+</td>
+<td style="text-align:left;font-family: monospace;">
+numeric_version
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lowerCamelCase
+</td>
+<td style="text-align:left;font-family: monospace;">
+addTaskCallback
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UpperCamelCase
+</td>
+<td style="text-align:left;font-family: monospace;">
+SignatureMethod
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="scripts" class="slide section level1">
+<h1>Scripts</h1>
+<p>Top five advantages of using scripts over the console:</p>
+<center>
+<ol reversed class="indented1 incremental" style="text-align:center; list-style-position:inside; font-size:130%; font-weight:bold;">
+<li style="color:#800080;">
+Easier to write (and fix!) your code
+</li>
+<li style="color:#f2b111;">
+You can add comments to remind yourself what each command is doing
+</li>
+<li style="color:#2167bb;">
+Reuse your own code
+</li>
+<li style="color:darkgreen;">
+You can add loops and if-then statements later on
+</li>
+<li style="color:crimson;">
+Tell your friends you’re a
+coder!<br/><br/><img src="images/lisa-simpson-coding_360x240x256.png" width="360" height="240"/>
+</li>
+</ol>
+</center>
+<p><br />
+</p>
+</div>
+<div id="notebooks" class="slide section level1">
+<h1>Notebooks</h1>
+<div style="display:flex; justify-content:flex-start;">
+<div>
+<p><br />
+</p>
+<p><br />
+</p>
+<p>Similar to scripts, but can also include paragraph text, headings,
+pictures, formatting, etc.</p>
+<p>R supports RMarkdown and Quarto markdown (similar).</p>
+<p>R code is included in “code chunks” that get executed whenever you
+render the Notebook.</p>
+<p>Notebooks are great when the desired output is an <strong>HTML
+document</strong>, <strong>PDF</strong>, <strong>Word Doc</strong>,
+etc.</p>
+<p>For code that you want to repeat often, use a script.</p>
+</div>
+<!--- end left div --->
+<div>
+<p><img src="images/quarto-notebook_600x683.png"
+style="border:2px solid gray;" /></p>
+</div>
+<p><!--- end right div ---></p>
+</div>
+<p><!--- end container ---></p>
+</div>
+<div id="functions" class="slide section level1">
+<h1>Functions</h1>
+<p>The keys to R’s superpowers are <strong>functions</strong>! There are
+<strong>four things</strong> you need to know to use a function:</p>
+<style>img.stackme {position:absolute; top:0; left:0;}</style>
+<div style='position:relative; border:none; height:450px;width:901px; margin:0 auto; '>
+<img src="images/foo_01.png"/>
+<img src="images/foo_02.png" class="incremental stackme"/>
+<img src="images/foo_03.png" class="incremental stackme"/>
+<img src="images/foo_04.png" class="incremental stackme"/>
+<img src="images/foo_05.png" class="incremental stackme"/>
+</div>
+<p><br />
+</p>
+</div>
+<div id="what-do-functions-return" class="slide section level1">
+<h1>What Do Functions Return?</h1>
+<div class="indented2 li-single">
+<ul class="incremental">
+<li>numbers<br />
+</li>
+<li>dates<br />
+</li>
+<li>text<br />
+</li>
+<li>data frames and matrices<br />
+</li>
+<li>spatial data<br />
+</li>
+<li>plots<br />
+</li>
+<li>trained regression models<br />
+</li>
+<li>HTML widgets<br />
+</li>
+<li>another function that returns a color ramp<br />
+</li>
+<li>a drone image collection metadata record<br />
+</li>
+<li><span style="color:crimson;">⇒ almost anything you can think of can
+be returned by a function!!</span></li>
+<li><span style="color:crimson;">⇒ anything returned by a function can
+also be saved to an object</span></li>
+</ul>
+</div>
+</div>
+<div id="which-function-should-i-use" class="slide section level1">
+<h1>Which function should I use?</h1>
+<center>
+<table>
+<tbody>
+<tr>
+<td style="text-align:right; font-style:italic; padding:10px; border:none;">
+Finding the right R function, half the battle is.<br><br>- Jedi MasteR
+Yoda
+</td>
+<td style="padding:5px;">
+<img src="images/yoda_bg-white_200x170.jpg" style="width:200px; height:170px;">
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><strong>Ask your friends</strong></p>
+<p><strong>Ask Google / ChatGPT</strong></p>
+<p><a
+href="https://rstudio.github.io/cheatsheets/"><strong>Cheatsheets!</strong></a></p>
+</div>
+<div id="function-help" class="slide section level1">
+<h1>Function Help</h1>
+<p>Every function has a help page. To get to it enter <code>?</code>
+followed by the name of the function (without parentheses):</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>?rnorm</span></code></pre></div>
+</div>
+<p><img src="images/rnorm_help_16cols_930x690.png"
+style="display:block; margin:1em auto; border:1px solid grey;" /></p>
+<p><br />
+</p>
+</div>
+<div id="function-arguments" class="slide section level1">
+<h1>Function Arguments</h1>
+<p>Most functions take arguments. Arguments can be <em>required</em> or
+<em>optional</em> (i.e. have a default value).</p>
+<p>See the function’s help page to determine which arguments are
+expected. Example:</p>
+<p><img src="images/function-help-args_560x290x256.png"
+style="display:block; margin:1em auto; border:1px solid grey;" /></p>
+<div style="text-align:center;">
+<p><code>x</code> and <code>size</code> have no default value → they are
+<em>required</em></p>
+<p><code>replace</code> and <code>prob</code> have default values → they
+are <em>optional</em></p>
+</div>
+<p><br />
+</p>
+<h2 id="to-name-or-not-to-name-your-arguments-that-is-the-question.">To
+name or not to name your arguments? That is the question.</h2>
+<p>All arguments have names. You can explicitly name arguments when
+calling a function as follows:</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+</div>
+<p><br />
+</p>
+<p>Benefits of naming your arguments:</p>
+<div class="indented2 li-single">
+<ol style="list-style-type: decimal">
+<li>Helps you remember what each argument is<br />
+</li>
+<li>You can enter then in any order<br />
+</li>
+<li>You can skip arguments if you’re happy with the default value</li>
+</ol>
+</div>
+<p><br />
+</p>
+<p>But you can <em>omit argument names</em> if you pass them <strong>in
+the order expected</strong> and <strong>don’t skip any</strong>.</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">50</span>, <span class="dv">3</span>)  <span class="do">## generate 500 normally distributed random</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                   <span class="do">## numbers with a mean of 50 and stand dev = 3.</span></span></code></pre></div>
+</div>
+<p><br />
+</p>
+</div>
+<div id="r-packages" class="slide section level1">
+<h1>R Packages</h1>
+<p><img src="images/packages_200x202.png" style="float:right;" /></p>
+<p>Packages are what R calls <em>extensions</em> or
+<em>add-ons</em>.</p>
+<div id="whats-in-a-package" class="incremental">
+<h2>What’s in a package?</h2>
+<div class="indented2 li-single">
+<ul>
+<li>additional functions!<br />
+</li>
+<li>function help pages</li>
+<li>tutorials (Vignettes)</li>
+<li>datasets</li>
+</ul>
+</div>
+</div>
+<!---- incremental --->
+<div id="where-do-you-find-them" class="incremental">
+<h2>Where do you find them?</h2>
+<div class="indented2 li-single">
+<ul>
+<li>people in your field<br />
+</li>
+<li><a href="https://cran.r-project.org/web/views/" target="_blank"
+rel="noopener">CRAN - Task Views</a><br />
+</li>
+<li><a
+href="https://cran.r-project.org/web/packages/available_packages_by_name.html"
+target="_blank" rel="noopener">CRAN - List of all packages by
+name</a><br />
+</li>
+<li>publications</li>
+<li>blog posts (e.g., <a
+href="https://agstats.io/post/keeping-up-with-r/" target="_blank"
+rel="noopener"><em>R packages for Agricultural Research</em></a>)</li>
+</ul>
+</div>
+</div>
+<!---- incremental --->
+</div>
+<div id="installing-and-using-packages" class="slide section level1">
+<h1>Installing and Using Packages</h1>
+<p>Three simple steps to use the functions in a package:</p>
+<ol style="list-style-type: decimal">
+<li><p>Figure out which package you need</p></li>
+<li><p>Install (i.e., download) it (just once)</p></li>
+</ol>
+<p><img src="images/install-package-tab_575x170x256.png"
+style="display:block; margin:1em auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Load it into memory (must do this <em>every</em> time you start
+RStudio)</li>
+</ol>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+</div>
+</div>
+<div id="piping" class="slide section level1">
+<h1>Piping</h1>
+<p><img src="images/piping_200x44x256.png"
+style="float:right; margin-top:-2em;" /></p>
+<p><strong>Piping syntax</strong> is an alternative syntax for chaining
+together functions.</p>
+<style type="text/css">
+span.inline-code {
+  font-family: courier, monospace;
+  font-weight: bold;
+  color: darkgreen;
+}
+</style>
+<p>With piping, you use the pipe operator <span
+class="inline-code">|&gt;</span> (or <span
+class="inline-code">%&gt;%</span>) to ‘feed’ the result of one function
+into the next function.</p>
+<p>Piping allows the results of one function to be passed as the
+<strong>first argument</strong> of the next function. Hence a series of
+commands to be written like a sentence.</p>
+<p>This generally requires functions that have been written to make
+changes to whatever object was passed in first argument, and return
+it.</p>
+<h2 id="example">Example</h2>
+<p>Consider the expression:</p>
+<p style="text-align:center; font-family:Consolas, monospace; font-size:120%;">
+zoo(moo(boo(foo(99)),n=4))
+</p>
+<div style='position:relative; border:none; height:192px;width:797px; margin:0 auto; '>
+<img src="images/functions-piping_001.png" class="incremental stackme"/>
+<img src="images/functions-piping_002.png" class="incremental stackme"/>
+<img src="images/functions-piping_003.png" class="incremental stackme"/>
+<img src="images/functions-piping_004.png" class="incremental stackme"/>
+<img src="images/functions-piping_005.png" class="incremental stackme"/>
+</div>
+<p><br />
+</p>
+</div>
+<div id="piping-tips-and-tricks" class="slide section level1">
+<h1>Piping Tips and Tricks</h1>
+<p>Keyboard shortcut for inserting the pipe operator:
+<code>ctrl + shift + m</code></p>
+<div class="indented2">
+<p>You can tell RStudio which pipe to insert under Global Options
+&gt;&gt; Code</p>
+<div class="indented2">
+<p><span class="inline-code"><code>|&gt;</code></span> (‘native’ pipe
+introduced R4.0)</p>
+<p><span class="inline-code"><code>%&gt;%</code></span> (from
+<code>magrittr</code> package)</p>
+</div>
+</div>
+<p><br />
+</p>
+<p>To split a chain of functions across <em>multiple lines</em>, end
+each line with a pipe operator:</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="fl">0.1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">log</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">sum</span>() </span></code></pre></div>
+<pre><code>## [1] 141.4023</code></pre>
+</div>
+<p><br />
+</p>
+<p>If the receiving function requires additional arguments, just add
+them <em>starting with the 2nd argument</em> (or use named
+arguments):</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.41 0.97 0.08 0.07 0.26</code></pre>
+</div>
+<p><br />
+</p>
+</div>
+<div id="same-function-name-different-packages"
+class="slide section level1">
+<h1>Same Function Name, Different Packages</h1>
+<p>Occasionally two or more packages will have different functions that
+use the same name. <img src="images/sad-face-32x32.png" /></p>
+<p>When this happens, R will use whichever one was loaded first.</p>
+<p>Best practice: use the package name and the <code>::</code> reference
+to specify which package a function is from.</p>
+<div class="indented1 indented1r">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> sp<span class="sc">::</span><span class="fu">over</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> grDevices<span class="sc">::</span><span class="fu">over</span>()</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">select</span>()</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>()</span></code></pre></div>
+</div>
+<div class="tip">
+<p>When you use the <em><code>package_name::function_name</code></em>
+syntax, you don’t actually have to first load the package with
+<tt>library()</tt>.</p>
+</div>
+<p><br />
+</p>
+<div class="tip">
+<p><strong>Resolving Name Conflicts with the <code>conflicted</code>
+Package</strong></p>
+<p>When you call a function that exists in multiple packages, R uses
+whichever package was loaded first.</p>
+<p>The <code>conflicted</code> package helps you avoid problems with
+duplicate function names, by specifying which one to prioritize <em>no
+matter what order</em> they were loaded.</p>
+<div class="indented1 indented1r">
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode r klippy copyme"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># Set conflict preference</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;count&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co"># From here on out, anytime we call select() or filter(), R will</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># always use the dplyr version.</span></span></code></pre></div>
+</div>
+</div>
+<p><br />
+</p>
+</div>
+<div id="vectors" class="slide section level1">
+<h1>Vectors</h1>
+<p><strong>Vectors</strong> are R objects that contain <strong>multiple
+elements</strong> of the <strong>same class</strong>.</p>
+<p><strong>Example:</strong></p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>i <span class="ot">=</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">12</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>i</span></code></pre></div>
+<pre><code>## [1]  4  5  6  7  8  9 10 11 12</code></pre>
+</div>
+<p><br />
+</p>
+<p>More examples:</p>
+<p><img src="images/vectors_450x230x256.png"
+style="margin-left:2em;" /></p>
+<p><br />
+</p>
+</div>
+<div id="making-vectors" class="slide section level1">
+<h1>Making Vectors</h1>
+<p>In general, you need to use a <strong>function</strong> or
+<strong>operator</strong> to create a vector.</p>
+<p><strong>Example 1:</strong> Create a sequence of numbers with the
+<code>:</code> operator:</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<p><br />
+</p>
+<p><strong>Example 2:</strong> <code>rep()</code> function</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="st">&quot;Quercus&quot;</span>, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Quercus&quot; &quot;Quercus&quot; &quot;Quercus&quot; &quot;Quercus&quot; &quot;Quercus&quot;</code></pre>
+</div>
+<p><br />
+</p>
+<p><strong>Example 3:</strong> Random number functions</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="do">## Generate normally distributed random numbers</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] -1.6891683 -1.1048986 -0.6000753  2.2828762  0.1296368</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="do">## R has a built-in constant with the names of the months</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>month.name</span></code></pre></div>
+<pre><code>##  [1] &quot;January&quot;   &quot;February&quot;  &quot;March&quot;     &quot;April&quot;     &quot;May&quot;       &quot;June&quot;     
+##  [7] &quot;July&quot;      &quot;August&quot;    &quot;September&quot; &quot;October&quot;   &quot;November&quot;  &quot;December&quot;</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="do">## Sample three months at random</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">sample</span>(month.name, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;November&quot; &quot;December&quot; &quot;January&quot;</code></pre>
+</div>
+<p><br />
+</p>
+<p><strong>Example 4:</strong> Manually combine elements with
+<code>c()</code></p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>yn <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>yn</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE  TRUE</code></pre>
+</div>
+<p><br />
+</p>
+<p>How big is my vector?</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">length</span>(yn)</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+</div>
+</div>
+<div id="vectorized-functions-the-best-thing-since-sliced-bread"
+class="slide section level1">
+<h1>“Vectorized” Functions: The Best Thing Since Sliced Bread</h1>
+<p>Many R functions and math operators are <strong>vectorized</strong>
+(i.e., operate on each individual element).</p>
+<p><br />
+</p>
+<p><strong>Example</strong></p>
+<p>First we create two numeric vectors:</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">15</span></span></code></pre></div>
+</div>
+<p><br />
+</p>
+<p>Are <code>sin()</code> &amp; <code>cos()</code> vectorized?</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">sin</span>(x)</span></code></pre></div>
+<pre><code>## [1]  0.0000000  0.8414710  0.9092974  0.1411200 -0.7568025</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">cos</span>(y)</span></code></pre></div>
+<pre><code>## [1]  0.004425698  0.843853959  0.907446781  0.136737218 -0.759687913</code></pre>
+</div>
+<p><br />
+</p>
+<p>Addition (and all math functions) is vectorized:</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>x <span class="sc">+</span> y</span></code></pre></div>
+<pre><code>## [1] 11 13 15 17 19</code></pre>
+</div>
+<p><br />
+</p>
+<h2 id="aggregate-functions">Aggregate functions</h2>
+<p>Functions that accept a vector and spit out a single value are called
+<strong>aggregate</strong> functions.</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="do">## Sum</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">sum</span>(x)</span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="do">## Mean</span></span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="do">## Standard deviation</span></span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">sd</span>(x)</span></code></pre></div>
+<pre><code>## [1] 1.581139</code></pre>
+</div>
+<p><br />
+</p>
+</div>
+<div id="subset-vectors" class="slide section level1">
+<h1>Subset Vectors</h1>
+<p>To extract a single element from a vector, you can use <strong>square
+bracket</strong> notation. Inside the square brackets, enter an
+expression that specifies which elements to return.</p>
+<div style="font-family:monospace; margin-left:2em;">
+<p>my_vector[ <em>expression-which-identifies-specific-elements</em>
+]</p>
+</div>
+<p><br />
+</p>
+<h2 id="option-1.-subset-with-indices">Option 1. Subset with
+indices</h2>
+<p><img src="images/vector_indices_885x80x256.png"
+style="display:block; margin:1em auto; border:1px solid #ddd; padding:1em;" /></p>
+<p><br />
+</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>state.abb[<span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;CA&quot;</code></pre>
+</div>
+<p>To return multiple elements, pass a <strong>vector of
+indices</strong>.</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>state.abb[<span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;CA&quot; &quot;CO&quot; &quot;CT&quot;</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>state.abb[<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>)]</span></code></pre></div>
+<pre><code>## [1] &quot;GA&quot; &quot;AR&quot; &quot;CO&quot; &quot;FL&quot;</code></pre>
+</div>
+<p><br />
+</p>
+<h2 id="option-2-subset-with-logicals">Option 2: Subset with
+logicals</h2>
+<p>You can also insert a vector of <strong>logical values</strong>
+(TRUE/FALSE) in the brackets. R will return the corresponding element
+for the TRUE values.</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>month.name[<span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>)]</span></code></pre></div>
+<pre><code>## [1] &quot;March&quot;</code></pre>
+</div>
+<p><br />
+</p>
+<p>Better still, use an <strong>expression</strong> that returns a
+vector of <strong>logical values</strong>:</p>
+<p><strong>Example:</strong> Pull all out the months that start with
+‘M’.</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="do">## View the first letter of each month</span></span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="fu">substr</span>(month.name, <span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;J&quot; &quot;F&quot; &quot;M&quot; &quot;A&quot; &quot;M&quot; &quot;J&quot; &quot;J&quot; &quot;A&quot; &quot;S&quot; &quot;O&quot; &quot;N&quot; &quot;D&quot;</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="do">## Use that to find all the months that start with &#39;M&#39;</span></span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a>month.name[<span class="fu">substr</span>(month.name, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">==</span> <span class="st">&quot;M&quot;</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;March&quot; &quot;May&quot;</code></pre>
+</div>
+<p><br />
+</p>
+</div>
+<div id="tabular-data" class="slide section level1">
+<h1>Tabular Data</h1>
+<p><img src="images/table_500x169x256.png" /></p>
+<p>R has two data classes that organize data in rows and columns:</p>
+<div class="indented2">
+<ul>
+<li><strong>data frames</strong></li>
+<li><strong>matrices</strong><br />
+</li>
+</ul>
+</div>
+<h2 id="rows-and-columns-by-any-other-name.">Rows and Columns by any
+other name….</h2>
+<div style="width:250px; float:left;">
+<p><br />
+<br />
+<br />
+<br />
+<strong>rows</strong></p>
+<p><em>aka</em>:<br />
+- record<br />
+- case<br />
+- observation<br />
+- feature (spatial)</p>
+</div>
+<div style="display:inline-block; border:none;">
+<p><strong>columns</strong></p>
+<p><em>aka:</em> variable, field</p>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+</div>
+<div class="colclear">
+
+</div>
+<p><br />
+</p>
+<h2 id="key-concepts">Key concepts</h2>
+<div class="indented2 li-single">
+<ul>
+<li>columns of a data frame are <em>vectors</em><br />
+</li>
+<li>columns have <em>names</em><br />
+</li>
+<li>you can refer to columns by their <em>name</em> or
+<em>position</em></li>
+<li><em>data frames</em> and <em>tibbles</em> are essentially
+equivalent</li>
+</ul>
+</div>
+<p><br />
+</p>
+<h2 id="pulling-out-a-single-column">Pulling out a Single Column</h2>
+<p>To get an individual column, use <strong><code>$</code></strong></p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">head</span>(trees)</span></code></pre></div>
+<pre><code>##   Girth Height Volume
+## 1   8.3     70   10.3
+## 2   8.6     65   10.3
+## 3   8.8     63   10.2
+## 4  10.5     72   16.4
+## 5  10.7     81   18.8
+## 6  10.8     83   19.7</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a>trees<span class="sc">$</span>Height</span></code></pre></div>
+<pre><code>##  [1] 70 65 63 72 81 83 66 75 80 75 79 76 76 69 75 74 85 86 71 64 78 80 74 72 77
+## [26] 81 82 80 80 80 87</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>trees<span class="sc">$</span>Height <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      63      72      76      76      80      87</code></pre>
+</div>
+<p><br />
+</p>
+<h2 id="subsetting-rows-and-columns">Subsetting rows and columns</h2>
+<p>You can use square bracket notation or tidyverse methods (dplyr).</p>
+<div class="indented2 indented2r">
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a>trees[<span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">c</span>(<span class="st">&quot;Girth&quot;</span>, <span class="st">&quot;Volume&quot;</span>)]</span></code></pre></div>
+<pre><code>##    Girth Volume
+## 10  11.2   19.9
+## 11  11.3   24.2
+## 12  11.4   21.0</code></pre>
+</div>
+<p><br />
+</p>
+</div>
+<div id="importing-data-rstudios-import-dataset-wizard"
+class="slide section level1">
+<h1>Importing Data: RStudio’s Import Dataset Wizard</h1>
+<center>
+<img src="images/rstudio_import-dataset_410x298x256.png" />
+</center>
+<p><br />
+</p>
+<center>
+<img src="images/files-import-dataset_560x331x256.png" />
+</center>
+<p><br />
+</p>
+</div>
+<div id="end" class="slide section level1">
+<h1>End!</h1>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><img src="images/r-logo_240x180.png"
+style="display:block; margin:1em auto;" /></p>
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+---
+title: "Explore the Fire Ignition Points Attribute Table"
+output: 
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+
+In this Notebook, we'll do compute some summary stats for the attribute table of the Yosemite fire ignition points, then use attribute queries to filter them.
+
+# SETUP
+
+Load the packages we'll need for this notebook (sf, dplyr, and tmap):
+
+```{r chunk01}
+library(sf)
+library(dplyr)
+library(tmap)
+```
+
+\
+
+Pro-actively resolve any name clashes:
+
+```{r chunk02}
+library(conflicted)
+
+# Set conflict preferences
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("count", "dplyr", quiet = TRUE)
+conflict_prefer("select", "dplyr", quiet = TRUE)
+conflict_prefer("arrange", "dplyr", quiet = TRUE)
+```
+
+\
+
+Next import fire ignition points layer:
+
+```{r chunk03}
+## Define the location of the geodatabase
+gdb_fires_fn <- "./data/yose_firehistory.gdb"
+file.exists(gdb_fires_fn)
+
+## View the layers in this source
+st_layers(gdb_fires_fn)
+
+## Import the historic fires ignition points
+yose_fires_pt <- st_read(gdb_fires_fn, layer="YNP_FireHistoryPoints")
+
+## Preview
+glimpse(yose_fires_pt)
+```
+
+\
+
+Import the park boundary and project it to UTM Zone 11N NAD83 (for plotting):
+
+```{r chunk04}
+epsg_utm11n_nad83 <- 26911
+
+yose_bnd_sf <- st_read(dsn="./data", layer="yose_boundary") |> 
+  st_transform(epsg_utm11n_nad83)
+```
+
+\
+
+Plot them:
+
+```{r chunk05}
+tm_shape(yose_bnd_sf) +
+  tm_borders() +
+tm_shape(yose_fires_pt) + 
+  tm_dots(col = "red", alpha = 0.5, size = 0.05) 
+```
+
+\
+
+# DESCRIPTIVE STATS OF THE ATTRIBUTE TABLE
+
+If you want to compute descriptive stats on the attribute table, without regard to the geometry, you can extract the attribute table as a data frame with `st_drop_geometry()`:
+
+```{r chunk06}
+yose_fires_pt |> st_drop_geometry() |> head()
+```
+
+\
+
+## CHALLENGE QUESTIONS
+
+Q01. What is the distribution of acres burned?
+
+TIP: To view the distribution, compute the quantiles or make a histogram plot.
+
+[Answer](http://bit.ly/3kXVHZA)
+
+```{r chunk07}
+## Your answer here
+
+```
+
+\
+
+Q02. Compute a frequency table of fire causes.
+
+[Answer](http://bit.ly/3ZzvT5a)
+
+```{r chunk08}
+## Your answer here
+
+```
+
+\
+
+Q03. What was the largest fire?
+
+[Answer](http://bit.ly/3Zx0K2k)
+
+```{r chunk09}
+## Your answer here
+
+```
+
+\
+
+Q04. For each decade, compute the number of fires, and the mean fire size.
+
+[Answer](http://bit.ly/3F5Zb3e)
+
+```{r chunk11}
+## Your answer here
+
+```
+
+\
+
+# ATTRIBUTE QUERIES
+
+Attribute queries can be performed using dplyr `filter()`.
+
+Example: make a plot of the fire ignition points from the 1930s:
+
+```{r chunk12}
+fires30s_sf <- yose_fires_pt |> 
+  filter(DECADE == 1930)
+
+head(fires30s_sf)
+
+tm_shape(yose_bnd_sf) +
+  tm_borders() +
+tm_shape(fires30s_sf) + 
+  tm_dots(col = "red", size = 0.2) 
+```
+
+\
+
+## CHALLENGE QUESTIONS
+
+Q05. Make a plot of all the human caused fire ignition points.
+
+[Answer](http://bit.ly/3l1uLZ0)
+
+```{r chunk13}
+## Your answer here
+
+```
+
+\
+
+Q06. Make a plot of all the human caused fire ignition points in the 1980s (only).
+
+[Answer](http://bit.ly/3l05iiB)
+
+```{r chunk14}
+## Your answer here
+
+```
+
+\
+
+Q07. Plot the *human caused fires each decade* (one plot per decade), for each decade from the 1980s onward:
+
+Tip: See `tm_facets()`
+
+[Answer](http://bit.ly/3mGs7YY)
+
+```{r chunk15}
+## Your answer here
+
+```
+

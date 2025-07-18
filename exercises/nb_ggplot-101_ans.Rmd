@@ -1,0 +1,156 @@
+---
+title: "ggplot 101"
+output: 
+  html_notebook:
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+---
+
+```{css echo = FALSE}
+h1,h2,h3 {font-weight:bold;}
+h1 {font-size:24px;}
+h2 {font-size:20px;}
+h3 {font-size:16px;}
+```
+\
+
+In this notebook, we'll get some practice making plots with ggplot using the [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/) dataset.
+
+# Setup
+
+Load packages and set conflicted preferences:
+
+```{r chunk01, message = FALSE}
+library(dplyr)
+library(ggplot2)
+
+## Load the conflicted package
+library(conflicted)
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("count", "dplyr", quiet = TRUE)
+conflict_prefer("select", "dplyr", quiet = TRUE)
+conflict_prefer("arrange", "dplyr", quiet = TRUE)
+```
+
+\
+
+Next, we load the Palmer Penguins data frame:
+
+```{r chunk02}
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+\
+
+# Scatterplots
+
+Our first ggplot will be a simple scatterplot of bill length and flipper length:
+
+
+```{r chunk03}
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point()
+```
+
+\
+
+Next, change the color of the dots by manually specifying a color value in the geom function:
+
+```{r chunk04}
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point(color = "blue")
+```
+
+\
+
+Next, we color them by species:
+
+```{r chunk05}
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = bill_length_mm, color = species)) +
+  geom_point()
+```
+
+\
+
+Don't like the default colors (which are not color-blind friendly)? We can specify our preferred palette by tacking on `scale_color_manual()` to our expression:
+
+```{r chunk06}
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = bill_length_mm, color = species)) +
+  geom_point() +
+  scale_color_manual(values = c("darkorange","darkorchid","cyan4")) 
+```
+
+\
+
+# CHALLENGE 1
+
+1A\) Make a scatterplot with *bill depth* on the x-axis and *body mass* on the y-axis. [[Answer](https://bit.ly/3bKiYtB)]
+
+```{r chunk07}
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm, y = body_mass_g)) +
+  geom_point()
+```
+
+\
+
+1B\) Visualize your plot of *bill depth* vs. *body mass* by species, using different i) colors, and ii) shapes. [[Hint](https://bit.ly/3C00mjY)] [[Solution](https://bit.ly/3pcHeaL)]
+
+```{r chunk08}
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm, y = body_mass_g, color = species, shape = species)) +
+  geom_point()
+```
+
+\
+
+# Facets
+
+Another way we can differentiate the points is by using *facets* (i.e., a separate plot for each group). We can ask for facets by adding `facet_wrap()` or `facet_grid()` to our plot expression: 
+
+```{r chunk09}
+ggplot(data = penguins,
+       mapping = aes(x = flipper_length_mm, y = bill_length_mm)) +
+  geom_point() +
+  facet_wrap(~species)
+```
+
+\
+
+# Boxplots
+
+You can use `geom_boxplot()` to draw boxplots. 
+
+To  create multiple boxplots for different groups of data, pass a column that has categorical (character or factor) values as either the `x` or `y` property in `aes()`. ggplot will take care of the rest!
+
+```{r chunk10}
+ggplot(penguins, aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot()
+```
+
+\
+
+# CHALLENGE 2
+
+Make a histogram of flipper length for each species. [[Hint](https://bit.ly/3pfmEqm)]  [[Solution](https://bit.ly/3pjcfJX)]
+
+```{r chunk11}
+ggplot(penguins, aes(x = flipper_length_mm)) +
+  geom_histogram() +
+  facet_wrap(~species)
+```
+
+\
+
+# End
+
+Remember to save your work to render a HTML file.
+
+
+

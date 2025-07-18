@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="" />
+  <title>GIS 101</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+              </style>
+  <script src="lib/header-attrs-2.29/header-attrs.js"></script>
+  <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="lib/slidy-2/scripts/slidy.js"></script>
+  <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="slidy2022.css" />
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">GIS Fundamentals</h1>
+  <p class="author">
+<img src='images/geospatial_layers_300x439.png' style='width:300px; height:439px; margin-top:2em;'/>
+  </p>
+</div>
+<div id="gis-fundamentals" class="slide section level1 subsection">
+<h1 class="subsection"><span class="subsecttitle-pre"></span><span
+class="subsecttitle-main">GIS Fundamentals</span></h1>
+<script>
+w3c_slidy.mouse_click_enabled = false;
+</script>
+</div>
+<div id="geospatial-data" class="slide section level1">
+<h1>Geospatial Data</h1>
+<h2 id="physical-world-gis-world">Physical World → GIS World</h2>
+<p>Start by chopping up the real world into different “layers” with
+similar features:</p>
+<p><img src="images/geospatial_layers_490x456.png" /></p>
+<p><br />
+</p>
+<p>Option 1 is to represent features as “vectors” (points, lines and
+polygons):</p>
+<p><img src="images/vectors-features-abstract_600x280x256.png" /></p>
+<p><br />
+</p>
+<p>Option 2 is to represent features as a grid or “raster”:</p>
+<p><img src="images/raster-features-abstract_600x276x256.png" /></p>
+</div>
+<div id="projections" class="slide section level1">
+<h1>Projections</h1>
+<p>How do we squish a round planet onto flat maps?</p>
+<p><img src="images/projections_546x676x256.png" /></p>
+<div class="centerblock" style="margin-top:2em;">
+<iframe src="https://www.jasondavies.com/maps/transition/" style="width:1234px;height:732px;">
+<p>
+Your browser does not support iframes.
+</p>
+</iframe>
+</div>
+<p><br />
+</p>
+<h2 id="utm">UTM</h2>
+<p>A common projection system is <strong>Universal Transverse
+Mercator</strong> (UTM). UTM divides the planet up into 60 zones that
+are 6 degrees wide. The USA falls in zones 10-19.</p>
+<div class="centerblock">
+<a href="https://commons.wikimedia.org/wiki/File:Utm-zones-USA.svg"><img src="images/utm-zones-use_640x480.png"></img></a>
+</div>
+<h2 id="what-you-need-to-remember-about-projections-in-r">What You Need
+to Remember about Projections in R</h2>
+<div class="compact">
+<ul>
+<li>With rare exceptions (i.e., tmap), R <strong>does not reproject on
+the fly</strong><br />
+</li>
+<li>The <code>sf</code> package can <strong>read &amp; write projection
+info</strong> when importing or exporting GIS files<br />
+</li>
+<li>If your analysis uses <strong>distance or area</strong> in any way,
+you should use <strong>projected coordinates</strong> (not
+lat-long)</li>
+<li>Some web map packages (e.g., leaflet) <strong>require
+lat-long</strong></li>
+<li>(Re)projecting is <strong>easy</strong> (with
+<code>st_transform()</code>)</li>
+<li>The best way to refer to projections is by <strong>EPSG
+numbers</strong><br />
+</li>
+</ul>
+</div>
+</div>
+<div id="attributes" class="slide section level1">
+<h1>Attributes</h1>
+<p>Every feature has some additional, non-spatial properties, typically
+called <em>attributes</em>.</p>
+<p><img src="images/attribute-table_610x282x256.png" /></p>
+<p>Attributes are used for:</p>
+<div class="compact">
+<ul>
+<li>symbology<br />
+</li>
+<li>selecting features (aka, attribute query)<br />
+</li>
+<li>bringing in info from other tables (aka attribute join)<br />
+</li>
+<li>analysis<br />
+</li>
+</ul>
+</div>
+</div>
+<div id="raster-data" class="slide section level1">
+<h1>Raster Data</h1>
+<h2 id="remotely-sensed-data">Remotely Sensed Data</h2>
+<div class="compact">
+<ul>
+<li>satellite sensors<br />
+</li>
+<li>airborne or UAV mounted<br />
+</li>
+<li>DEMs from radar<br />
+</li>
+</ul>
+</div>
+<div class="indented4">
+<p><img src="images/landsat_fcc_400x400.jpg" /><br/><em>Landsat infrared
+image (false-color-composite)</em></p>
+</div>
+<div class="indented4">
+<p><img src="images/yose_dem_436x550x256.png" /><br/><em>Elevation
+(measured from Shuttle)</em></p>
+</div>
+<h2 id="derived-or-modeled-data">Derived or modeled data</h2>
+<div class="compact">
+<ul>
+<li>interpolated surfaces (e.g., environmental variables,
+elevation)</li>
+<li>Kernel density surface (probability of occurrence)</li>
+<li>cost surfaces</li>
+<li>classified images</li>
+</ul>
+</div>
+<div class="indented4">
+<p><img src="images/lulc_houston-galveston_2015_660x750.png"
+class="indented4" /><br/><em>Land cover map (derived from satellite
+image)</em></p>
+</div>
+<div class="indented4">
+<p><img
+src="images/yose_dist-to-trails_486x598.png" /><br/><em>Distance to
+trails (computed)</em></p>
+</div>
+<h2 id="single-vs.-multi-band-rasters">Single vs. Multi-Band
+Rasters</h2>
+<p>Rasters with multiple layers are common in multi-spectral data (e.g.,
+Landsat). Each band saves the reflectance in a different part of the
+electromagnetic spectrum.</p>
+<p><img src="images/multi-band-raster_331x152.png"
+class="indented4" /></p>
+<p>Whether saved as separate RasterLayer objects, or a single
+multi-layered RasterStack or RasterBrick, up to three layers can be
+combined to produce colors when plotting.</p>
+<p><img src="images/multi-band-raster-composite_512x327.png"
+class="indented4" /></p>
+</div>
+<div id="raster-spatial-properties" class="slide section level1">
+<h1>Raster Spatial Properties</h1>
+<p>Raster data structures are always <em>rectangular</em>. The spatial
+structure is implicit.</p>
+<p>Spatial properties include:</p>
+<div class="compact">
+<ul>
+<li>origin<br />
+</li>
+<li>projection / CRS<br />
+</li>
+<li>resolution (pixel size)<br />
+</li>
+</ul>
+</div>
+<p><br />
+</p>
+</div>
+<div id="pixel-values-continuous-vs-discrete"
+class="slide section level1">
+<h1>Pixel Values: Continuous vs Discrete</h1>
+<p>Cell values can be either <strong>continuous</strong> or
+<strong>discrete</strong>.</p>
+<p><strong>Continuous </strong></p>
+<p><img src="images/continuous-raster_504x500.png"
+class="indented4" /></p>
+<p><strong>Discrete / Categorical</strong></p>
+<p><img src="images/landcover-map_524x560.png" class="indented4" /></p>
+<div class="infobox">
+<p>Discrete rasters also have a ‘Raster Attribute Table’ (RAT), which
+stores the name of each category.</p>
+</div>
+<div class="infobox">
+<p><strong>Rasters vs. Tiles</strong></p>
+<div class="indented2">
+<p><strong>Rasters</strong> are data you can visualize and
+manipulate.</p>
+<p><strong>Tiles</strong> are background images you get from online
+providers for display purposes. They look nice, but what you see is what
+you get (no ability to manipulate).</p>
+</div>
+</div>
+<!--- infobox --->
+<div class="tryit">
+<p><strong>Continuous or Discrete?</strong></p>
+<p>How would you represent each of the following surfaces - continuous
+or discrete?</p>
+<div class="compact">
+<ul>
+<li>temperature</li>
+<li>land cover</li>
+<li>land use</li>
+<li>soil type</li>
+<li>fire risk</li>
+</ul>
+</div>
+</div>
+<!--- TryIt --->
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>

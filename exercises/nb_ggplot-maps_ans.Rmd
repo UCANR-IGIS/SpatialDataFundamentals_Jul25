@@ -1,0 +1,488 @@
+---
+title: "Mapping with ggplot"
+output: 
+  html_notebook:
+    toc: yes
+    toc_float: yes
+---
+
+```{css echo = FALSE}
+h1,h2 {font-weight:bold;}
+```
+
+In this notebook, we'll try out some methods for making maps with ggplot.
+
+# Load packages and set preferences
+
+```{r chunk01, results = 'hold', message = FALSE}
+library(sf)
+library(dplyr)
+library(ggplot2)
+
+## Load the conflicted package
+library(conflicted)
+conflict_prefer("filter", "dplyr", quiet = TRUE)
+conflict_prefer("count", "dplyr", quiet = TRUE)
+conflict_prefer("select", "dplyr", quiet = TRUE)
+conflict_prefer("arrange", "dplyr", quiet = TRUE)
+```
+
+\
+
+# Import spatial data
+
+```{r chunk02, results = 'hold'}
+## Define a convenience constant
+epsg_geo_wgs84 <- 4326
+
+## City boundary
+sf_citybnd_ll <- st_read("./data/sf_citybnd.geojson")
+sf_citybnd_ll
+
+## City neighborhoods
+sf_nb_ll <- st_read(dsn = "./data/sf_nb.geojson")
+sf_nb_ll
+
+## Libraries
+sf_libraries_ll <- read.csv("./data/sf_libraries_longlat.csv") %>% 
+  st_as_sf(coords = c("long", "lat"), crs = epsg_geo_wgs84) %>% 
+  select(-score, -locName, -status, -matchAddr, -side, -addressType)
+sf_libraries_ll
+```
+
+\
+
+# Make Maps with ggplot
+
+We start plotting just the city boundary:
+
+```{r chunk03}
+ggplot(sf_citybnd_ll) + geom_sf()
+```
+
+\
+
+### Add layers
+
+Add an additional layer for the neighborhood boundaries:
+
+```{r chunk04}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_sf(data = sf_nb_ll, aes(fill = nhood))
+```
+
+\
+
+Get rid of the legend and add a title:
+
+```{r chunk05}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_sf(data = sf_nb_ll, aes(fill = nhood)) +
+  theme(legend.position="none") +
+  ggtitle("San Francisco Neighborhoods")
+```
+
+\
+
+### Zoom in
+
+You can also 'zoom in' by adding `coord_sf()`. For example to zoom into Bayview Hunters Point:
+
+```{r chunk06}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_sf(data = sf_nb_ll, col = "navy", lwd=1,  fill = NA) +
+  coord_sf(xlim = c(-122.41, -122.355), ylim = c(37.705, 37.76)) +
+  ggtitle("Bayview Hunters Point")
+```
+
+\
+
+## Add elements from ggspatial
+
+### Scale bar and compass
+
+Add a scale bar and compass using annotation functions from `ggspatial`:
+
+```{r chunk07}
+library("ggspatial")
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_sf(data = sf_nb_ll, aes(fill = nhood)) +
+  theme(legend.position="none") +
+  ggtitle("San Francisco Neighborhoods") +
+  annotation_scale(location = "tl", width_hint = 0.5) +
+  annotation_north_arrow(location = "tl", which_north = "true", 
+                         pad_x = unit(0, "in"), pad_y = unit(0.4, "in"),
+                         style = north_arrow_fancy_orienteering) 
+```
+
+\
+
+### Add a Basemap
+
+We can use `annotation_map_tile()` from `ggspatial` to add a basemap from a tile service provided by Open Street Map.
+
+```{r chunk08}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  annotation_map_tile(type = "osm", zoom = 12) +
+  geom_sf(data = sf_nb_ll, col = "navy", fill = NA, lwd = 1.1) +
+  ggtitle("San Francisco Neighborhoods")
+```
+
+\
+
+Notes on `annotation_map_tile()`:
+
+The `zoom` argument determines the amount of detail in the background map. It can vary from 1 (entire world) to 20 (an individual building). For a city, try values in the range of 10-12.
+
+Other base maps you can use for the `type` argument include:
+
+```{r chunk09}
+rosm::osm.types()
+```
+
+\
+
+**RSTUDIO CLOUD NOTE:** Downloading background tiles takes a lot of memory (because gdal and raster processes are called). If you're working on RStudio Cloud, you may have to restart RStudio at this point (Session >> Restart R). Then uncomment the following line to reload the packages and data.
+
+```{r chunk10}
+# source("nb_ggplot-maps_reload.R")
+```
+
+### CHALLENGE
+
+Create the map above with a different basemap (e.g., `cartolight`):
+
+```{r chunk11}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  annotation_map_tile(type = "cartolight", zoom = 12) +
+  geom_sf(data = sf_nb_ll, col = "navy", fill = NA, lwd = 1.1) +
+  ggtitle("San Francisco Neighborhoods")
+```
+
+\
+
+## Symbolize Points with Icons
+
+We can plot the libraries using icons using the ggimage package. Let's look where they are:
+
+```{r chunk12}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_sf(data = sf_libraries_ll) +
+  ggtitle("San Francisco Libraries")
+```
+
+\
+
+To plot the libraries as icons, we can use the `ggimage` package. However this package doesn't know how to read sf objects, so we have to first make a data frame with the longitude-latitude coordinates of the libraries:
+
+```{r chunk13}
+sf_libraries_df <- sf_libraries_ll %>% 
+  st_coordinates() %>% as.data.frame()
+
+sf_libraries_df %>% head()
+```
+
+\
+
+Now we can feed the data frame into `geom_icon()`:
+
+```{r chunk14}
+library(ggimage)
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_icon(data = sf_libraries_df, aes(x = X, y = Y), image = "library-sharp", size = 0.04) +
+  ggtitle("San Francisco Libraries")
+```
+
+\
+
+`geom_icon()` Notes:
+
+- `geom_icon()` gets its icons from [ionic.io](https://ionic.io/ionicons). When you find an icon you like, click on it and you'll see the name that you pass for the `image` argument.
+
+- The other important argument in `geom_icon()` is `size`. The units for size are the plot coordinates (which in our case are degrees).
+
+\
+
+### YOUR TURN
+
+Go to <https://ionic.io/ionicons>, choose a different icon for the libraries, and use it as the library symbol in a map.
+
+```{r chunk15}
+## Your answer here
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_icon(data = sf_libraries_df, aes(x = X, y = Y), image = "book", size = 0.04, col = "red") +
+  ggtitle("San Francisco Libraries")
+```
+
+\
+
+You can also a local or online PNG or SVG file for point symbols. In this case, you need to use it `geom_image()`, and pass the filename or URL for the `image` argument:
+
+```{r chunk16}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2) +
+  geom_image(data = sf_libraries_df, aes(x = X, y = Y), image = "./data/book-circled_40x40.png",
+             size = 0.05, by = "width", asp = 1) +
+  ggtitle("San Francisco Libraries") 
+```
+
+# Visualize 311 Call Locations
+
+**RSTUDIO CLOUD NOTE**: RStudio Cloud users are advised to restart their R session before proceeding to clear up memory, then uncomment the following to reload the packages and data.
+
+```{r chunk17}
+# source("nb_ggplot-maps_reload.R")
+```
+
+\
+
+311 is the number (or website) you can call to ask city services to come deal with something. It's one of the datasets the city makes available on [SFData.org](https://data.sfgov.org/City-Infrastructure/311-Cases/vw6y-z8j6).
+
+## Import 311 Data
+
+The workshop data folder contains a Geopackage with 311 calls from 2021 for street and sidewalk cleaning. We can import it with:
+
+```{r chunk18}
+strtswlk_311_sf <- st_read(dsn = "./data/sf_311_strt-sdwk-cln_2021.gpkg")
+dim(strtswlk_311_sf)
+```
+
+\
+
+The data include different types of cleaning requests:
+
+```{r chunk19}
+strtswlk_311_sf$service_subtype %>% table()
+```
+
+\
+
+278,000 is a lot of points for a map! Let's just plot requests to clean up Bulky Items:
+
+```{r chunk20}
+strtswlk_bulky_sf <- strtswlk_311_sf %>% filter(service_subtype == "Bulky Items")
+
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2, col = "dimgray") +
+  geom_sf(data = strtswlk_bulky_sf, cex = 0.3)
+```
+
+## Option 1. Bin the data
+
+Because there are so many points, we need a visualization strategy that avoids 'overplotting' (i.e., laying points on top of each other). There are several options to deal with overplotting. The first option we'll demonstrate is simply binning the data into grid cells and visualizing the number of calls per cell.
+
+ggplot2 provides a 2d binning function called geom_bin_2d(). The only problem is this geom doesn't know who to handle sf objects - it wants a data frame. So step 1 is to construct a data frame with the longitude and latitude coordinates:
+
+```{r chunk21}
+stswlk_bulky_df  <- strtswlk_bulky_sf %>% st_coordinates() %>% as.data.frame()
+
+rm(strtswlk_bulky_sf) # to recover the memory
+
+glimpse(stswlk_bulky_df)
+```
+
+\
+
+Now we can feed this into `geom_bin_2d()`:
+
+```{r chunk22}
+ggplot() + 
+  geom_bin_2d(data = stswlk_bulky_df, aes(x = X, y = Y), stat = "bin2d") +
+  geom_sf(data = sf_citybnd_ll, lwd=1.2, col = "red", fill = NA) +
+  labs(fill = "# Bulky Item Calls")
+```
+
+\
+
+## Option 2. Contour Lines
+
+A second approach is to create contours of the density of calls. ggplot provides `geom_density_2d()` for this purpose. To speed performance a bit, we'll plot a random sample of the entire set of points:
+
+```{r chunk23}
+stswlk_samp_bulky_df <- stswlk_bulky_df %>% sample_n(10000)
+
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2, col = "dimgray") +
+  geom_density_2d(data = stswlk_samp_bulky_df, aes(x = X, y = Y))
+```
+
+\
+
+To make the contours, `geom_density_2d()` generates a Kernal Density Estimator (KDE) surface, which is a raster layer showing the density of points per unit area. a KDE surface is similar to binning the data, however it also applies a smoothing function.
+
+### Add a legend to our contour plot
+
+To create the legend, we should add `color` to our aes() function, and tell it which variable to use. While we're at it, we can get rid of the axes labels:
+
+```{r chunk24}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2, col = "dimgray") +
+  geom_density_2d(data = stswlk_samp_bulky_df, 
+                  aes(x = X, y = Y, color = ..level..)) +
+  theme(axis.title=element_blank())
+```
+
+To make the colors stand out a bit more, we can change the color scale:
+
+```{r chunk25}
+ggplot(sf_citybnd_ll) + geom_sf(lwd=1.2, col = "dimgray") +
+  geom_density_2d(data = stswlk_samp_bulky_df, 
+                  aes(x = X, y = Y, color = stat(level))) +
+  theme(axis.title=element_blank()) +
+  scale_color_viridis_c()
+```
+
+\
+
+## Option 3. Contour Bands
+
+Better yet, we can also add a filled version of the contour bands:
+
+```{r chunk26}
+ggplot() + 
+  geom_density_2d_filled(data = stswlk_samp_bulky_df, 
+                 aes(x = X, y = Y, color = stat(level))) +
+  geom_density_2d(data = stswlk_samp_bulky_df, 
+                  aes(x = X, y = Y),
+                  color = "black") +
+  geom_sf(data = sf_citybnd_ll, lwd=1, col = "white", fill = NA) +
+  theme(axis.title=element_blank())
+```
+
+\
+
+We have two legends going on - one for the fill colors and one for the contour lines (which are all black). We can suppress the legend for the contour lines with `guides()`:
+
+```{r chunk27}
+ggplot() + 
+  geom_density_2d_filled(data = stswlk_samp_bulky_df, 
+                 aes(x = X, y = Y, color = stat(level))) +
+  geom_density_2d(data = stswlk_samp_bulky_df, 
+                  aes(x = X, y = Y),
+                  color = "black") +
+  geom_sf(data = sf_citybnd_ll, lwd=1, col = "white", fill = NA) +
+  theme(axis.title=element_blank()) + 
+  guides(color = "none")
+```
+
+\
+
+The contour lines show the density of 311 calls per unit of *map area*, which makes the numbers a bit hard to interpret. We can normalize the density to 0..1 by specifying a different contour variable:
+
+```{r chunk28}
+ggplot() + 
+  geom_density_2d_filled(data = stswlk_samp_bulky_df,
+                         contour_var = "ndensity",
+                         aes(x = X, y = Y, color = stat(level))) +
+  geom_density_2d(data = stswlk_samp_bulky_df, 
+                  aes(x = X, y = Y),
+                  color = "black") +
+  geom_sf(data = sf_citybnd_ll, lwd=1, col = "white", fill = NA) +
+  theme(axis.title=element_blank()) + 
+  labs(fill = "Density") +
+  ggtitle("Relative Abundance of 311 Calls for Bulky Items") +
+  guides(color = "none")
+
+```
+
+\
+
+The map above is ok except for the solid fill of of the lowest level. There are a few ways to improve that like making the alpha layer
+
+```{r chunk29}
+ggplot() + 
+  geom_density_2d_filled(data = stswlk_samp_bulky_df,
+                         contour_var = "ndensity",
+                         aes(x = X, y = Y, color = stat(level), alpha = stat(level))) +
+  geom_density_2d(data = stswlk_samp_bulky_df, 
+                  aes(x = X, y = Y),
+                  color = "black") +
+  geom_sf(data = sf_citybnd_ll, lwd=1, col = "navy", fill = NA) +
+  labs(fill = "Density") +
+  ggtitle("Relative Abundance of 311 Calls for Bulky Items, 2021") +
+  guides(color = "none", alpha = "none") +
+  theme(axis.title=element_blank()) 
+```
+
+\
+
+## Draw the Contours with a Polygon Geom
+
+The last method we'll show to deal with overplotting is similar to above, but we'll display the contour lines as polygons instead of 2d_density contours. What's the difference you ask? The polygon geom has more options that we can modify.
+
+To draw the KDE contours as polygons, we have to turn to the "stat" version of geom_density_2d(), which is stat_density_2d(). Both of these are actually just wrappers for ggplot2::layer, so its not as radical as it might seem. The stat version computes the KDE contours, but also allows us to pick the geom to use to draw the contours.
+
+```{r chunk30}
+library(RColorBrewer)
+
+ggplot(data = sf_citybnd_ll) + 
+  annotation_map_tile(type = "osm", zoom = 13) +
+  geom_sf(data = sf_citybnd_ll, lwd=1, col = "navy", fill = NA) +
+  stat_density_2d(data = stswlk_samp_bulky_df,
+                  geom = "polygon",
+                  contour_var = "ndensity",
+                  aes(x = X, y = Y, fill = stat(level)),
+                  n=c(100,200),
+                  alpha = 0.2,
+                  bins = 25) + 
+  scale_fill_gradientn(colors = brewer.pal(7, "YlOrRd")) +
+  theme(axis.title=element_blank()) +
+  ggtitle("Relative Abundance of 311 Calls for Bulky Items, 2021")
+```
+
+\
+
+Other values you could use for the color ramp:
+
+![](https://ajlyons.github.io/rspatial_bgs22/slides/images/brewer-ramps_800x492.png)
+
+### YOUR TURN
+
+Repeat the map above with a different color ramp
+
+```{r chunk31}
+## Your answer here
+ggplot() + 
+  geom_sf(data = sf_citybnd_ll, lwd=1, col = "navy", fill = NA) +
+  stat_density_2d(data = stswlk_samp_bulky_df,
+                  geom = "polygon",
+                  contour_var = "ndensity",
+                  aes(x = X, y = Y, fill = stat(level)),
+                  n=c(100,200),
+                  alpha = 0.2,
+                  bins = 25) + 
+  scale_fill_gradientn(colors = brewer.pal(7, "YlGnBu")) +
+  theme(axis.title=element_blank()) +
+  ggtitle("Relative Abundance of 311 Calls for Bulky Items, 2021")
+```
+
+\
+
+Lastly, let's make a separate heat maps for each subtype of service. We have to first go back to the full data frame and pull out the coordinates:
+
+```{r chunk32}
+stswlk_coords_df  <- strtswlk_311_sf %>% 
+  mutate(long = st_coordinates(.)[,1],
+         lat = st_coordinates(.)[,2]) %>% 
+  st_drop_geometry() %>% 
+  select(requested_date, service_subtype, long, lat) %>% 
+  filter(service_subtype %in% c("Bulky Items", "General Cleaning", "City_garbage_can_overflowing", "Human or Animal Waste"))
+
+glimpse(stswlk_coords_df)
+```
+
+Now can use the `service_subtype` column to create facets of the data:
+
+**RSTUDIO CLOUD NOTE**: This will probably not work on RStudio Cloud due to memory limits
+
+```{r chunk33}
+ggplot() + 
+  geom_sf(data = sf_citybnd_ll, fill = NA) +
+  stat_density_2d(data = stswlk_coords_df,
+                  geom = "polygon",
+                  contour_var = "ndensity",
+                  aes(x = long, y = lat, fill = stat(level)),
+                  n=c(100,200),
+                  alpha = 0.2,
+                  bins = 25) + 
+  facet_wrap( ~ service_subtype) +
+  scale_fill_gradientn(colors = brewer.pal(7, "YlOrRd")) +
+  theme(axis.title=element_blank()) +
+  ggtitle("311 Calls for Street and Sidewalk Cleaning, 2021")
+```

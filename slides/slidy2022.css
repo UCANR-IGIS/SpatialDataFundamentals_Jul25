@@ -1,0 +1,265 @@
+p.author {
+  line-height:150%;
+}
+div.slide.titlepage h1 {
+  padding-top:5%;
+}
+h1 {
+  color:darkgreen;
+  line-height:1.4em;
+}
+div.slide.titlepage h1.title {
+  color:#444;
+  font-size:200%;
+}
+div.slide.titlepage h1.subtitle {
+  color:black;
+  font-size:150%;
+  padding-top:0em;
+}
+h2, p.qtext {
+  color:#444;
+  font-size: 1.2em;
+  font-weight:bold;
+}
+.indented1 {
+  margin-left:1em;
+}
+.indented1r {
+  margin-right:1em;
+}
+div.indented2 {
+  margin-left:2em;
+}
+div.indented2r {
+  margin-right:2em;
+}
+div.li-single > ul > li {
+  margin-bottom:0.1em;
+} 
+div.samplecode {
+  margin-left:2em;
+  color:navy;
+  font-family:monospace;
+  font-weight:bold;
+} 
+pre {
+  font-weight:normal;
+  font-size:80%;
+}
+pre > code {
+  font-size:80%;
+}
+div.shaded-box {
+  margin:1em 2em;
+  border:5px solid #888;
+  background-color:#ddd;
+}
+.compact pre {
+  font-weight: normal;
+  font-size: 70%;
+  line-height: 110%;
+}
+.compact li {
+  line-height: 80%;
+  margin-left: 2em;
+}
+.singlespace li {
+  margin-bottom:0;
+}
+div.protip {
+  padding: 1em 0 0.5em;
+  margin: 2em 4em;
+  background-color: white;
+  border: 2px dashed DarkGreen;
+  border-radius: 8px;
+  background-color: #EAFAF1;
+}
+div.protip::before {
+  content: "Pro Tip";
+  color: DarkGreen;
+  display: block;
+  width: 3.2em;
+  font-size: 110%;
+  font-style: italic;
+  font-weight: bold;
+  margin: -1.6em 0.8em 1em;
+  padding-left: 0.2em;
+  background-color:#EAFAF1;
+  border-radius: 10px;
+}
+div.infobox {
+  padding: 1em 0 0.5em;
+  margin: 2.5em 4em;
+  background-color: white;
+  border: 1.5px dashed #72A7CF;
+  border-radius: 6px;
+}
+div.infobox::before {
+  color: #72A7CF;
+  content: url(images/info_50x50.png);
+  display: block;
+  width: 2em;
+  font-size: 120%;
+  font-style: normal;
+  margin: -1.7em 0.8em 0.8em;
+  padding-left: 0.3em;
+  background-color: white;
+}
+div.tip {
+  padding: 1em 0 0.5em;
+  margin: 1.5em 4em;
+  background-color: white;
+  border: 1.5px dashed Navy;
+  border-radius: 6px;
+}
+div.tip::before {
+  content: "Tip";
+  color: Navy;
+  display: block;
+  width: 1.5em;
+  font-size: 100%;
+  font-style: italic;
+  margin: -1.6em 0.8em 1em;
+  padding-left: 0.2em;
+  background-color: white;
+}
+div.colleft {
+  float:left;
+  width:48%;
+  border: 0px;
+}
+div.colright {
+  float:right;
+  width:48%;
+  border: 0px;
+}
+div.colclear {
+  clear: both;
+}
+img.stackme {
+  position:absolute;
+  top:0;
+  left:0;
+}
+div.space_images > p > img {
+  margin-bottom:4em;
+}
+.tbl_compact {
+  border-collapse: collapse;
+}
+.tbl_compact > tbody {
+  border:1px solid #555;
+}
+
+.tbl_compact td, .tbl_compact th {
+  padding: 10px 30px;
+  border-bottom:1px solid gray;
+}
+.tbl_compact td {
+  font-size: 100%;
+}
+.tbl_compact tr:nth-child(even) {
+  background-color: #dddddd;
+}
+em {
+  color:indigo;
+  font-weight:600;
+}
+img.stackme {
+  position:absolute;
+  top:0;
+  left:0;
+}
+span.bigred {
+  color:crimson;
+  font-weight:bold;
+}
+span.fakecode {
+  display:block;
+  margin-top: 0.7em;
+  font-weight: normal;
+  font-size: 80%;
+  font-family: monospace;
+  color: #00428C;
+  padding: 0.2em 1em;
+  border: thin solid #95ABD0;
+  border-left-width: 1em;
+  background-color: #E4E5E7;
+  line-height: 150%;
+}
+
+.centerblock {
+  text-align:center;
+  margin: 0 auto;
+}
+div.tip {
+  padding: 1em 0 0.5em;
+  margin: 1.5em 4em;
+  background-color: white;
+  border: 1.5px dashed Navy;
+  border-radius: 6px;
+}
+div.tip::before {
+  content: "Tip";
+  color: Navy;
+  display: block;
+  width: 1.5em;
+  font-size: 100%;
+  font-style: italic;
+  margin: -1.6em 0.8em 1em;
+  padding-left: 0.2em;
+  background-color: white;
+}
+
+div.subsection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.subsection > h1 {
+  font-family: 'Arial Black', sans-serif;
+  color:#444;
+  text-align:center;
+  margin-right:0;
+  font-variant-caps: small-caps;
+}
+
+div.subsection > h1 > span.subsecttitle-pre {
+  font-size: 210%;
+  display: block;
+  line-height: 2em;
+}
+
+div.subsection > h1 > span.subsecttitle-main {
+  font-size: 305%;
+  display: block;
+  line-height: 1em;
+}
+
+span.exercise {
+  color:#9900cc;
+  font-weight:bold;
+}
+
+div.cardcontainer {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: space-between;
+  column-gap: 40px;
+}
+
+div.card {
+  max-width: 30%;
+  border:none;
+}
+
+img.centerme {
+  display:block;
+  margin:0 auto;
+}
+
+div.hidetitle > h1 {
+  display:none;
+}
