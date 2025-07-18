@@ -1,11 +1,9 @@
 ## Required packages
-pkgs_req <- c("sf", "leaflet", "tmap", "tmaptools", "leaflet", "ggmap", 
-              "RColorBrewer", "raster", "maps", "tidyverse",  "jsonlite", 
-              "rasterVis", "nngeo", "lwgeom", "remotes", 
-              "conflicted", "tigris", "tidycensus", "stars",
-              "googlesheets4", "httr", "rjson", "usethis", "rinat",
-              "ggspatial", "rosm", "ggimage", "wrkshputils", "palmerpenguins", "here",
-              "terra")
+pkgs_req <- c("sf", "tidyverse", "tmap", "terra",
+              "RColorBrewer", "maps", "raster",
+              "nngeo", "lwgeom", "remotes", "conflicted", "tigris", "rmarkdown",
+              "googlesheets4", "usethis", "rinat", 
+              "ggspatial", "rosm", "ggimage", "wrkshputils", "palmerpenguins", "here")
 
 ## See which ones are missing
 (pkgs_missing <- pkgs_req[!(pkgs_req %in% installed.packages()[,"Package"])])

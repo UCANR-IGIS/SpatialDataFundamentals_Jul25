@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content=" July 17, 2025 Andy Lyons  " />
+  <meta name="copyright" content="<a href='../index.html' style='color:#444; margin-left:2em;'>Home</a><a href='https://ucanr-igis.github.io/SpatialDataFundamentals_Jul25/' style='color:#444; margin-left:2em;'>https://ucanr-igis.github.io/SpatialDataFundamentals_Jul25/</a>"/>
+  <title>Spatial R</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+              </style>
+  <script src="lib/header-attrs-2.29/header-attrs.js"></script>
+  <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="lib/slidy-2/scripts/slidy.js"></script>
+  <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="slidy2022.css" />
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Spatial Data Fundamentals in R</h1>
+  <p class="author">
+<img src='images/intro_472x220.png' style='width:472px; height:220px; margin-top:0.5em; margin-bottom:1em;'/><br/>July
+17, 2025<br/>Andy Lyons<br/><br/>
+  </p>
+  <p class="date"><a href='https://ucanr-igis.github.io/SpatialDataFundamentals_Jul25/' style='color:darkgreen; font-size:105%; font-family:monospace;'>https://ucanr-igis.github.io/SpatialDataFundamentals_Jul25/</a></p>
+</div>
+<div id="start-recording" class="slide section level1 hidetitle">
+<h1 class="hidetitle">Start Recording</h1>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><img src="images/postit_bg-trans_with-note_320x320.png"
+style="display:block; margin:1em auto; border:none;" /></p>
+<p><br />
+</p>
+<script>
+w3c_slidy.mouse_click_enabled = false;
+</script>
+<!---- 
+# Outline
+---->
+</div>
+<div id="about-me" class="slide section level1">
+<h1>About Me…</h1>
+<p><img src="images/anr_montage-wide_1120x520.png" /></p>
+</div>
+<div id="igis-team" class="slide section level1 hidetitle">
+<h1 class="hidetitle">IGIS Team</h1>
+<p><img src="images/about-igis_1200x670_q10.jpg" /></p>
+</div>
+<div id="some-of-my-r-work" class="slide section level1">
+<h1>Some of My R Work</h1>
+<h2 id="degday">degday</h2>
+<div class="sbs_icontext_contain">
+<div class="sbs_icontext_child">
+<p><img src="images/degday_hexlogo_v1a_104x120.png"/></p>
+</div>
+<div class="sbs_icontext_child">
+<p>Compute degree days in R<br/> <a
+href="https://ucanr-igis.github.io/degday/"
+target="_blank">https://ucanr-igis.github.io/degday/</a></p>
+</div>
+</div>
+<p><br />
+</p>
+<h2 id="uasimg">uasimg</h2>
+<div class="sbs_icontext_contain">
+<div class="sbs_icontext_child">
+<p><img src="images/uasimg_hex-logo1c_104x120.png"/></p>
+</div>
+<div class="sbs_icontext_child">
+<p>Data management utilities for drone mapping<br/> <a
+href="https://ucanr-igis.github.io/uasimg/"
+target="_blank">https://ucanr-igis.github.io/uasimg/</a></p>
+</div>
+</div>
+<p><br />
+</p>
+<h2 id="caladaptr">caladaptR</h2>
+<div class="sbs_icontext_contain">
+<div class="sbs_icontext_child">
+<p><img src="images/caladaptr-hexlogo_104x120.png"/></p>
+</div>
+<div class="sbs_icontext_child">
+<p>Bring climate data from Cal-Adapt into R using the API<br/> <a
+href="https://ucanr-igis.github.io/caladaptr/"
+target="_blank">https://ucanr-igis.github.io/caladaptr/</a></p>
+</div>
+</div>
+<p><br />
+</p>
+<h2 id="t-locoh">T-Locoh</h2>
+<div class="sbs_icontext_contain">
+<div class="sbs_icontext_child">
+<p>Homerange and spatial-temporal pattern analysis for wildlife tracking
+data<br/> <a href="http://tlocoh.r-forge.r-project.org/"
+target="_blank">http://tlocoh.r-forge.r-project.org/</a></p>
+</div>
+</div>
+<p><br />
+</p>
+<h2 id="shiny-apps">Shiny Apps</h2>
+<p>Chill Portions Under Climate Change Calculator<br />
+<a href="https://ucanr-igis.shinyapps.io/chill/" target="_blank"
+rel="noopener">https://ucanr-igis.shinyapps.io/chill/</a></p>
+<p>Drone Mission Planner for Reforestation Monitoring Protocol<br />
+<a href="https://ucanr-igis.shinyapps.io/uav_stocking_survey/"
+target="_blank">https://ucanr-igis.shinyapps.io/uav_stocking_survey/</a></p>
+<p>Stock Pond Volume Calculator<br />
+<a href="https://ucanr-igis.shinyapps.io/PondCalc/"
+target="_blank">https://ucanr-igis.shinyapps.io/PondCalc/</a></p>
+<p>Pistachio Nut Growth Calculator<br />
+<a href="https://ucanr-igis.shinyapps.io/pist_gdd/"
+target="_blank">https://ucanr-igis.shinyapps.io/pist_gdd/</a></p>
+</div>
+<div id="about-you" class="slide section level1">
+<h1>About You…</h1>
+</div>
+<div id="im-already-good-at-gis.why-should-i-learn-r"
+class="slide section level1 subsection">
+<h1 class="subsection"><span class="subsecttitle-pre"></span><span
+class="subsecttitle-pre" style="line-height: normal;">I’m already good
+at GIS.</br>Why should I learn R?</span></h1>
+</div>
+<div id="r---gis-integration" class="slide section level1">
+<h1>R - GIS Integration</h1>
+<p><img src="images/r-gis_600x180.png"
+style="display:block; margin:1em auto; border:none;" /></p>
+</div>
+<div id="gis-is-no-longer-one-thing" class="slide section level1">
+<h1>GIS is no longer one thing!</h1>
+<p><img src="images/geospatial-software-shelf_900x472.png"
+style="display:block; margin:1em auto; border:none;" /></p>
+<p><br />
+</p>
+</div>
+<div id="either-or-is-not-the-best-way-to-to-think-about-your-options"
+class="slide section level1">
+<h1>‘Either-or’ is not the best way to to think about your options</h1>
+<p><img src="images/rocky4-r-python-faceoff_597x500.jpg"
+style="display:block; margin:1em auto; border:none;" /></p>
+<p><br />
+</p>
+</div>
+<div id="a-better-question" class="slide section level1">
+<h1>A better question:</h1>
+<p><br />
+</p>
+<p><br />
+</p>
+<p style="text-align:center; font-size:200%; font-style:italic; font-weight:bold;">
+How to combine R with desktop GIS and cloud GIS?
+</p>
+</div>
+<div id="roles-that-r-can-play" class="slide section level1">
+<h1>Roles that R can play</h1>
+<style type="text/css">
+span.line2 {
+  display:inline-block;
+  margin-left:2em;
+  font-style:italic;
+}
+</style>
+<div class="indented1">
+<ul class="incremental">
+<li><p>R as a replacement for (some) GIS tasks<br/><span
+class="line2">especially where data is concerned</span></p></li>
+<li><p>Automating workflows<br/><span class="line2">example: <a
+href="https://ucanr-igis.github.io/tech_notes/webmap_prep.html"
+target="_blank" rel="noopener">Preparing Reference GIS Layers for a Web
+Map with R</a></span></p></li>
+<li><p>R for Spatial Analysis<br/><span class="line2">example: <a
+href="https://ytarazona.github.io/ForesToolboxRS/" target="_blank"
+rel="noopener">Forest Tools</a></span></p></li>
+<li><p>Accessing resources with R<br/><span class="line2">API clients
+often come out fast and first in Open Source</span></p></li>
+<li><p>R as a command and control center</p></li>
+</ul>
+</div>
+<p><br />
+</p>
+</div>
+<div id="where-r-shines" class="slide section level1">
+<h1>Where R shines</h1>
+<div class="indented1">
+<ul class="incremental">
+<li><p>R as a development platform</p></li>
+<li><p>Spatial stats</p></li>
+<li><p>Sharing code and data as packages</p></li>
+<li><p>Out-of-the-box operations<br/><span class="line2">new spatial and
+statistic techniques</span></p></li>
+<li><p>Generating new data from scratch</p></li>
+<li><p>Reporting</p></li>
+<li><p>Shiny apps</p></li>
+</ul>
+</div>
+<p><br />
+</p>
+</div>
+<div id="integrating-r-and-gis" class="slide section level1">
+<h1>Integrating R and GIS</h1>
+<div class="indented1">
+<ul class="incremental">
+<li><p>R ↔︎ ArcGIS<br/><span class="line2"><a
+href="https://www.esri.com/en-us/arcgis/products/r-arcgis-bridge/overview"
+target="_blank" rel="noopener">R-ArcGIS Bridge</a><br/><a
+href="https://r.esri.com/arcgislayers/" target="_blank"
+rel="noopener">arcgislayers</a></span></p></li>
+<li><p>R ↔︎ QGIS<br/><span class="line2"><a
+href="https://docs.qgis.org/3.22/en/docs/training_manual/processing/r_intro.html"
+target="_blank" rel="noopener"><code>Processing R Provider</code></a>
+plugin</span></p></li>
+<li><p>R ↔︎ Cloud data and services<br/><span class='line2'>API
+packages<br/><a href="https://httr.r-lib.org/" target="_blank"
+rel="noopener">httr</a><span></p></li>
+</ul>
+</div>
+<p><br />
+</p>
+</div>
+<div id="r-and-python" class="slide section level1">
+<h1>R and Python</h1>
+<p>R and Python actually play very well together:</p>
+<p><img src="images/r-python-sandbox_510x274x256.png"
+style="display:block; margin:1em auto; border:none;" /></p>
+</div>
+<div id="why-do-i-need-to-learn-thiscant-chatgpt-write-my-code-for-me"
+class="slide section level1 subsection">
+<h1 class="subsection"><span class="subsecttitle-pre"></span><span
+class="subsecttitle-pre" style="line-height: normal;">Why do I need to
+learn this?</br>Can’t ChatGPT write my code for me?</span></h1>
+</div>
+<div id="learning-r-with-genai" class="slide section level1">
+<h1>Learning R with GenAI</h1>
+<p><br />
+</p>
+<img src="images/cetinkaya-rundel-post-ai-tools_794x393.png"
+class="centerme" style="border: 1px solid gray; padding:5px;" />
+<center>
+<a href="https://www.tidyverse.org/blog/2025/04/learn-tidyverse-ai/"
+class="uri">https://www.tidyverse.org/blog/2025/04/learn-tidyverse-ai/</a>
+</center>
+<p><em>Highlights</em></p>
+<div class="compact">
+<ul>
+<li>ChatGPT will give you code.<br />
+</li>
+<li>It may or may not work.<br />
+</li>
+<li>It may or may not be good code (probably not).</li>
+<li>You should always cross check it with the documentation.<br />
+</li>
+</ul>
+</div>
+<p><br />
+</p>
+<p><em>Suggestions for Using ChatGPT to <u>Learn</u> R</em></p>
+<div class="compact">
+<ul>
+<li>“Use code completion tools sparingly if you’re a new user.”<br />
+</li>
+<li>ChatGPT is good for getting starter code, discovering functions,
+arguments, solving a simple, well-defined problem, etc.<br />
+</li>
+<li>Break a task into smaller steps.<br />
+</li>
+<li>Don’t depend on ChatGPT to create a workflow or chain</li>
+<li>Be wary of code you don’t understand.<br />
+</li>
+<li>R has great documentation &amp; tutorials online - take advantage of
+it.<br />
+</li>
+</ul>
+</div>
+<p><br />
+</p>
+<p><em>Other Tips</em></p>
+<div class="compact">
+<ul>
+<li>Claude is good at code<br />
+</li>
+<li>Give models the ability to read R package documentation using the
+Model Context Protocol (<a
+href="https://www.simonpcouch.com/blog/2025-07-17-claude-code-2/">source</a>)<br />
+</li>
+<li>Some people like the GenAI code-completion features in IDEs<br />
+</li>
+</ul>
+</div>
+<p><br />
+</p>
+</div>
+<div id="what-are-your-best-practices"
+class="slide section level1 subsection">
+<h1 class="subsection"><span class="subsecttitle-pre"></span><span
+class="subsecttitle-pre" style="line-height: normal;">What are <span
+style="text-decoration:underline;">your</span> best
+practices?</span></h1>
+<!------
+Omited
+   "sf-sf2sp"
+  
+# Exercise 1
+
+In this exercise, we will:
+
+::: {class="indented1"}
+
+1. Import some messy data from Excel \
+
+1. Wrangle the Penguins!  
+
+<div style="margin-left:4em;">
+
+- Subset columns  
+- Compute new columns  
+- Sort and subset rows  
+
+</div>
+:::
+
+This exercise will be done in an *R Notebook*!
+
+\
+
+::: {style="text-align:center; font-family:monospace; font-size:150%;"}
+[https://posit.cloud/content/10255792](https://posit.cloud/content/10255792)
+:::
+
+\
+
+
+# Break!
+
+![](images/stretch-break-1130x590x256.png){style="display:block; margin:1em auto; border:none;"}
+
+\
+
+# Notebook Exercise #2
+------------>
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>
